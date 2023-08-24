@@ -1,4 +1,4 @@
-import db, { users } from '@airbnb/database';
+import db from '@airbnb/database';
 import { publicProcedure, router } from '../../utils/trpc';
 
 const userRoute = router({
@@ -15,10 +15,14 @@ const userRoute = router({
     getUser: publicProcedure.query(async () => {
         //make 500 ms slow response
 
-        const _users = await db.select().from(users);
+        const property = await db.query.properties.findMany({
+            with: {
+                images: true,
+            },
+        });
 
         return {
-            userData: _users,
+            property: property,
         };
     }),
 });

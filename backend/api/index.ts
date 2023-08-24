@@ -4,13 +4,13 @@ import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 import customConfig from './config/default';
+import propertyRouter from './router/property';
 import uploadRouter from './router/upload';
-import userRoute from './router/user';
 import { createContext, router, type Context } from './utils/trpc';
 // import redisClient, { connectRedis } from './utils/connectRedis';
 
 export const appRouter = router({
-    user: userRoute,
+    property: propertyRouter,
 });
 
 const app = express();
