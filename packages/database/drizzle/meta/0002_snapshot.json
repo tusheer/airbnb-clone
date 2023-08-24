@@ -1,9 +1,55 @@
 {
     "version": "5",
     "dialect": "pg",
-    "id": "bacab0b5-ee51-44db-8123-a3bcf85402dd",
-    "prevId": "00000000-0000-0000-0000-000000000000",
+    "id": "a6732b5b-c778-4953-afed-c9c7050fa781",
+    "prevId": "67ebc8de-a459-43c2-9c66-c19e09466600",
     "tables": {
+        "images_to_properties": {
+            "name": "images_to_properties",
+            "schema": "",
+            "columns": {
+                "propertyId": {
+                    "name": "propertyId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "imageId": {
+                    "name": "imageId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "images_to_properties_propertyId_properties_id_fk": {
+                    "name": "images_to_properties_propertyId_properties_id_fk",
+                    "tableFrom": "images_to_properties",
+                    "tableTo": "properties",
+                    "columnsFrom": ["propertyId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                },
+                "images_to_properties_imageId_images_id_fk": {
+                    "name": "images_to_properties_imageId_images_id_fk",
+                    "tableFrom": "images_to_properties",
+                    "tableTo": "images",
+                    "columnsFrom": ["imageId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {
+                "images_to_properties_propertyId_imageId": {
+                    "name": "images_to_properties_propertyId_imageId",
+                    "columns": ["propertyId", "imageId"]
+                }
+            },
+            "uniqueConstraints": {}
+        },
         "images": {
             "name": "images",
             "schema": "",
@@ -196,6 +242,8 @@
     "_meta": {
         "schemas": {},
         "tables": {},
-        "columns": {}
+        "columns": {
+            "\"images_to_properties\".\"user_id\"": "\"images_to_properties\".\"propertyId\""
+        }
     }
 }

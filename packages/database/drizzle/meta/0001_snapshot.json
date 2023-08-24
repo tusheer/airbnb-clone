@@ -1,11 +1,57 @@
 {
     "version": "5",
     "dialect": "pg",
-    "id": "9211e299-95e4-4c31-8872-ca8a14c10ad3",
-    "prevId": "50f2959c-d47e-418f-872b-d2d357bf777e",
+    "id": "67ebc8de-a459-43c2-9c66-c19e09466600",
+    "prevId": "bacab0b5-ee51-44db-8123-a3bcf85402dd",
     "tables": {
-        "users": {
-            "name": "users",
+        "images_to_properties": {
+            "name": "images_to_properties",
+            "schema": "",
+            "columns": {
+                "user_id": {
+                    "name": "user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "group_id": {
+                    "name": "group_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "images_to_properties_user_id_properties_id_fk": {
+                    "name": "images_to_properties_user_id_properties_id_fk",
+                    "tableFrom": "images_to_properties",
+                    "tableTo": "properties",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                },
+                "images_to_properties_group_id_images_id_fk": {
+                    "name": "images_to_properties_group_id_images_id_fk",
+                    "tableFrom": "images_to_properties",
+                    "tableTo": "images",
+                    "columnsFrom": ["group_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {
+                "images_to_properties_user_id_group_id": {
+                    "name": "images_to_properties_user_id_group_id",
+                    "columns": ["user_id", "group_id"]
+                }
+            },
+            "uniqueConstraints": {}
+        },
+        "images": {
+            "name": "images",
             "schema": "",
             "columns": {
                 "id": {
@@ -14,21 +60,173 @@
                     "primaryKey": true,
                     "notNull": true
                 },
-                "full_name": {
-                    "name": "full_name",
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        },
+        "properties": {
+            "name": "properties",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "description": {
+                    "name": "description",
                     "type": "text",
                     "primaryKey": false,
                     "notNull": false
                 },
-                "phone": {
-                    "name": "phone",
-                    "type": "varchar(256)",
+                "location": {
+                    "name": "location",
+                    "type": "text",
                     "primaryKey": false,
                     "notNull": false
                 },
-                "email": {
-                    "name": "email",
-                    "type": "varchar(256)",
+                "owerName": {
+                    "name": "owerName",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "owerPhone": {
+                    "name": "owerPhone",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "price": {
+                    "name": "price",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "bed": {
+                    "name": "bed",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "bath": {
+                    "name": "bath",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "area": {
+                    "name": "area",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "type": {
+                    "name": "type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "rating": {
+                    "name": "rating",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "region": {
+                    "name": "region",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'all'"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        },
+        "property_tags": {
+            "name": "property_tags",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "image": {
+                    "name": "image",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        },
+        "property_types": {
+            "name": "property_types",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "image": {
+                    "name": "image",
+                    "type": "text",
                     "primaryKey": false,
                     "notNull": false
                 }
