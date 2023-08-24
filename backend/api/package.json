@@ -1,0 +1,75 @@
+{
+    "name": "@airbnb/api",
+    "version": "1.0.1",
+    "description": "",
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "index.ts",
+    "types": "index.ts",
+    "scripts": {
+        "build": "tsup",
+        "build:ts": "tsup --env.NODE_ENV production",
+        "copy:assets": "cpy 'src/generated/*.json' dist/generated",
+        "dev": "npm run dev:watch",
+        "dev:watch": "tsx watch --clear-screen=false index.ts",
+        "start": "tsx index.ts",
+        "start:prod": "node dist/index.js",
+        "typecheck": "tsc -b"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@airbnb/trpc": "*",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "@airbnb/database": "*",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-useragent": "^1.0.15",
+        "jsonwebtoken": "^9.0.1",
+        "multer": "^1.4.5-lts.1",
+        "nanoid": "^4.0.2",
+        "nookies": "^2.5.2",
+        "redis": "^4.6.7",
+        "@airbnb/schema": "*",
+        "sharp": "^0.32.5"
+    },
+    "devDependencies": {
+        "@types/cookie-parser": "^1.4.3",
+        "@types/cors": "^2.8.13",
+        "@types/express": "^4.17.17",
+        "@types/express-useragent": "^1.0.2",
+        "@types/jsonwebtoken": "^9.0.2",
+        "@types/morgan": "^1.9.4",
+        "@types/multer": "^1.4.7",
+        "@types/node": "^20.5.1",
+        "@types/sharp": "^0.31.1",
+        "concurrently": "^8.2.0",
+        "eslint": "^8.47.0",
+        "@airbnb/eslint-config-custom-node": "*",
+        "morgan": "^1.10.0",
+        "ts-node": "^10.9.1",
+        "tsup": "^7.2.0",
+        "tsx": "^3.12.7",
+        "typescript": "^5.1.6"
+    },
+    "tsup": {
+        "entry": [
+            "index.ts"
+        ],
+        "treeshake": true,
+        "sourcemap": true,
+        "minify": true,
+        "clean": true,
+        "dts": true,
+        "splitting": false,
+        "format": [
+            "cjs",
+            "esm"
+        ],
+        "external": [
+            "node"
+        ]
+    }
+}

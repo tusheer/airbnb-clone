@@ -1,0 +1,13 @@
+{
+    "root": true,
+    "extends": ["@stuffpie/eslint-config-custom-react", "next/core-web-vitals", "next", "plugin:storybook/recommended"],
+    "rules": {
+        "no-console": "error"
+    },
+    "settings": {
+        "next": {
+            "rootDir": "packages/ui/"
+        }
+    },
+    "ignorePatterns": ["**/*.stories.tsx"]
+}

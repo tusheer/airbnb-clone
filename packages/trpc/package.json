@@ -1,0 +1,21 @@
+{
+    "name": "@airbnb/trpc",
+    "version": "0.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "@tanstack/react-query": "^4.33.0",
+        "@tanstack/react-query-devtools": "^4.33.0",
+        "@trpc/client": "10.37.1",
+        "@trpc/next": "^10.37.1",
+        "@trpc/react-query": "^10.37.1",
+        "@trpc/server": "10.37.1",
+        "superjson": "^1.13.1"
+    },
+    "devDependencies": {
+        "typescript": "^5.1.6"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

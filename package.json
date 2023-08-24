@@ -1,0 +1,53 @@
+{
+    "name": "airbnb",
+    "private": true,
+    "workspaces": [
+        "backend/*",
+        "frontend/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "dotenv -- turbo run build",
+        "dev": "dotenv -- turbo run dev",
+        "db:push": "dotenv -- turbo run db:push",
+        "db:studio": "dotenv -- turbo run db:studio",
+        "db:generate": "dotenv -- turbo run db:generate",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "clear": "rimraf --glob **/node_modules",
+        "postinstall": "husky install",
+        "lint-staged": "lint-staged"
+    },
+    "devDependencies": {
+        "@turbo/gen": "^1.10.12",
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^8.47.0",
+        "husky": "^8.0.3",
+        "lint-staged": "^14.0.1",
+        "prettier": "^3.0.2",
+        "prettier-plugin-organize-imports": "^3.2.3",
+        "prettier-plugin-tailwindcss": "^0.5.3",
+        "rimraf": "^5.0.1",
+        "turbo": "^1.10.12",
+        "typescript": "^5.1.6"
+    },
+    "packageManager": "yarn@1.22.11",
+    "dependencies": {
+        "dotenv-cli": "^7.3.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "lint-staged": {
+        "**/*.{js,jsx,json}": [
+            "prettier --write ."
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    }
+}

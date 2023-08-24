@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0",
+    "name": "@airbnb/database",
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "scripts": {
+        "db:push": "drizzle-kit push:pg",
+        "db:studio": "drizzle-kit studio --port 3000",
+        "db:generate": "drizzle-kit generate:pg"
+    },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    },
+    "dependencies": {
+        "@neondatabase/serverless": "^0.6.0",
+        "drizzle-orm": "^0.28.2",
+        "pg": "^8.11.3",
+        "ts-node": "^10.9.1"
+    },
+    "devDependencies": {
+        "drizzle-kit": "^0.19.13",
+        "postgres": "^3.3.5",
+        "tsx": "^3.12.7"
+    }
+}

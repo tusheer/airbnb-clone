@@ -1,0 +1,20 @@
+{
+    "version": "5",
+    "dialect": "pg",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "5",
+            "when": 1692091224382,
+            "tag": "0000_breezy_iron_monger",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "5",
+            "when": 1692115326581,
+            "tag": "0001_numerous_lila_cheney",
+            "breakpoints": true
+        }
+    ]
+}
