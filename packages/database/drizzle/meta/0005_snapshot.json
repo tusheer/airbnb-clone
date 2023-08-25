@@ -1,0 +1,212 @@
+{
+    "version": "5",
+    "dialect": "pg",
+    "id": "3905202b-ae8b-4510-85f3-671c99410bf6",
+    "prevId": "8109e9dd-e399-489b-9b9d-08f7f8f28705",
+    "tables": {
+        "properties": {
+            "name": "properties",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "description": {
+                    "name": "description",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "location": {
+                    "name": "location",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "owerName": {
+                    "name": "owerName",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "owerPhone": {
+                    "name": "owerPhone",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "price": {
+                    "name": "price",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "bed": {
+                    "name": "bed",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "bath": {
+                    "name": "bath",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "area": {
+                    "name": "area",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "type": {
+                    "name": "type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "rating": {
+                    "name": "rating",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "region": {
+                    "name": "region",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'all'"
+                },
+                "types": {
+                    "name": "types",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'house'"
+                },
+                "images": {
+                    "name": "images",
+                    "type": "json",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'[]'::json"
+                },
+                "placeType": {
+                    "name": "placeType",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'all'"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        },
+        "property_tags": {
+            "name": "property_tags",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "image": {
+                    "name": "image",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        },
+        "tags_to_properties": {
+            "name": "tags_to_properties",
+            "schema": "",
+            "columns": {
+                "propertyId": {
+                    "name": "propertyId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "tagId": {
+                    "name": "tagId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "tags_to_properties_propertyId_properties_id_fk": {
+                    "name": "tags_to_properties_propertyId_properties_id_fk",
+                    "tableFrom": "tags_to_properties",
+                    "tableTo": "properties",
+                    "columnsFrom": ["propertyId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                },
+                "tags_to_properties_tagId_property_tags_id_fk": {
+                    "name": "tags_to_properties_tagId_property_tags_id_fk",
+                    "tableFrom": "tags_to_properties",
+                    "tableTo": "property_tags",
+                    "columnsFrom": ["tagId"],
+                    "columnsTo": ["id"],
+                    "onDelete": "no action",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {
+                "tags_to_properties_propertyId_tagId": {
+                    "name": "tags_to_properties_propertyId_tagId",
+                    "columns": ["propertyId", "tagId"]
+                }
+            },
+            "uniqueConstraints": {}
+        }
+    },
+    "enums": {},
+    "schemas": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    }
+}

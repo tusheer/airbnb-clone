@@ -1,17 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgTable, primaryKey, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
-
-export const images = pgTable('images', {
-    id: serial('id').primaryKey(),
-    name: varchar('name'),
-    url: text('url'),
-});
-
-export const imageRelations = relations(images, ({ many }) => {
-    return {
-        imageToProperties: many(imageToProperties),
-    };
-});
+import { integer, json, pgTable, primaryKey, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const propertyTags = pgTable('property_tags', {
     id: serial('id').primaryKey(),
@@ -22,18 +10,6 @@ export const propertyTags = pgTable('property_tags', {
 export const propertyTagsRelations = relations(propertyTags, ({ many }) => {
     return {
         tagsToProperties: many(tagsToProperties),
-    };
-});
-
-export const propertyTypes = pgTable('property_types', {
-    id: serial('id').primaryKey(),
-    name: varchar('name'),
-    image: text('image'),
-});
-
-export const propertyTypesRelations = relations(propertyTypes, ({ many }) => {
-    return {
-        typesToProperties: many(typesToProperties),
     };
 });
 
@@ -55,41 +31,14 @@ export const properties = pgTable('properties', {
     region: text('region', {
         enum: ['all', 'europe', 'canada', 'asia', 'united_kingdom', 'united_states'],
     }).default('all'),
+    types: text('types', {
+        enum: ['house', 'apartment', 'guesthouse', 'hotel'],
+    }).default('house'),
+    images: json('images').$type<{ url: string }[]>().default([]),
+    placeType: text('placeType', {
+        enum: ['all', 'room', 'entire_home'],
+    }).default('all'),
 });
-
-export const propertiesRelations = relations(properties, ({ many }) => {
-    return {
-        images: many(imageToProperties),
-        tags: many(tagsToProperties),
-        types: many(typesToProperties),
-    };
-});
-
-export const typesToProperties = pgTable(
-    'types_to_properties',
-    {
-        propertyId: integer('propertyId')
-            .notNull()
-            .references(() => properties.id),
-        typeId: integer('typeId')
-            .notNull()
-            .references(() => propertyTypes.id),
-    },
-    (t) => ({
-        pk: primaryKey(t.propertyId, t.typeId),
-    })
-);
-
-export const typesTopropertiesRelations = relations(typesToProperties, ({ one }) => ({
-    properties: one(properties, {
-        fields: [typesToProperties.propertyId],
-        references: [properties.id],
-    }),
-    images: one(propertyTypes, {
-        fields: [typesToProperties.typeId],
-        references: [propertyTypes.id],
-    }),
-}));
 
 export const tagsToProperties = pgTable(
     'tags_to_properties',
@@ -114,31 +63,5 @@ export const tagsTopropertiesRelations = relations(tagsToProperties, ({ one }) =
     images: one(propertyTags, {
         fields: [tagsToProperties.tagId],
         references: [propertyTags.id],
-    }),
-}));
-
-export const imageToProperties = pgTable(
-    'images_to_properties',
-    {
-        propertyId: integer('propertyId')
-            .notNull()
-            .references(() => properties.id),
-        imageId: integer('imageId')
-            .notNull()
-            .references(() => images.id),
-    },
-    (t) => ({
-        pk: primaryKey(t.propertyId, t.imageId),
-    })
-);
-
-export const imageTopropertiesRelations = relations(imageToProperties, ({ one }) => ({
-    properties: one(properties, {
-        fields: [imageToProperties.propertyId],
-        references: [properties.id],
-    }),
-    images: one(images, {
-        fields: [imageToProperties.imageId],
-        references: [images.id],
     }),
 }));

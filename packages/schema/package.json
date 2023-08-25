@@ -4,7 +4,9 @@
     "main": "index.ts",
     "license": "MIT",
     "dependencies": {
-        "zod": "^3.22.2"
+        "drizzle-zod": "^0.5.1",
+        "zod": "^3.22.2",
+        "@airbnb/database": "*"
     },
     "devDependencies": {
         "typescript": "^5.1.6"

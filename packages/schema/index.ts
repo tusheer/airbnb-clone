@@ -1,3 +1,2 @@
 export * from 'zod';
-export * from './product';
-export * from './user';
+export * from './property';

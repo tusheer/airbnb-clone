@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table {
+    @apply border-collapse;
+}
+
+.table th {
+    @apply bg-white px-6 py-3 text-xs font-semibold text-gray-600;
+}
+
+.table thead tr {
+    @apply bg-white;
+}
+
+.table tr:nth-child(odd) {
+    @apply bg-gray-50;
+}
+
+.table td {
+    @apply px-6 py-4;
+}
+
+.table td,
+.table th {
+    @apply border-b border-gray-200 text-left;
+}
