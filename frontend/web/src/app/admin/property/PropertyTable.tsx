@@ -18,7 +18,7 @@ const PropertyTable = () => {
                         <th>Price</th>
                         <th>Rating</th>
                         <th>Region</th>
-                        <th>Type</th>
+
                         <th></th>
                     </tr>
                 </thead>
@@ -39,12 +39,8 @@ const PropertyTable = () => {
                             <td>{property.price}</td>
                             <td>{property.rating}</td>
                             <td>{property.region}</td>
-                            <td>{property.type}</td>
 
                             <td>
-                                <button className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                                    Edit
-                                </button>
                                 <button className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
                                     Delete
                                 </button>

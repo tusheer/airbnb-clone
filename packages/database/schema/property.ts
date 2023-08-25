@@ -1,10 +1,10 @@
 import { relations } from 'drizzle-orm';
-import { integer, json, pgTable, primaryKey, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, json, pgTable, primaryKey, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const propertyTags = pgTable('property_tags', {
     id: serial('id').primaryKey(),
-    name: varchar('name'),
-    image: text('image'),
+    name: varchar('name').notNull(),
+    image: text('image').notNull(),
 });
 
 export const propertyTagsRelations = relations(propertyTags, ({ many }) => {
@@ -15,16 +15,15 @@ export const propertyTagsRelations = relations(propertyTags, ({ many }) => {
 
 export const properties = pgTable('properties', {
     id: serial('id').primaryKey(),
-    name: varchar('name'),
-    description: text('description'),
-    location: text('location'),
-    ownerName: text('owerName'),
-    ownerPhone: text('owerPhone'),
+    name: varchar('name').notNull(),
+    description: text('description').notNull(),
+    location: text('location').notNull(),
+    ownerName: text('owerName').notNull(),
+    ownerPhone: text('owerPhone').notNull(),
     price: integer('price'),
-    bed: integer('bed'),
-    bath: integer('bath'),
-    area: integer('area'),
-    type: text('type'),
+    bed: integer('bed').notNull(),
+    bath: integer('bath').notNull(),
+    area: integer('area').notNull(),
     created_at: timestamp('created_at').defaultNow(),
     updated_at: timestamp('updated_at'),
     rating: integer('rating'),
@@ -38,6 +37,7 @@ export const properties = pgTable('properties', {
     placeType: text('placeType', {
         enum: ['all', 'room', 'entire_home'],
     }).default('all'),
+    vat: boolean('vat').default(false),
 });
 
 export const tagsToProperties = pgTable(

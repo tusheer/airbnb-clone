@@ -1,38 +1,36 @@
-import db, { properties } from '@airbnb/database';
+import db, { properties, propertyTags } from '@airbnb/database';
+import { propertyCreateSchema, propertyTagCreateSchema, z } from '@airbnb/schema';
+import { eq } from 'drizzle-orm';
 import { publicProcedure, router } from '../../utils/trpc';
 
 const propertyRoute = router({
     getProperties: publicProcedure.query(async () => {
         const property = await db.query.properties.findMany();
-
         return {
             property: property,
         };
     }),
 
-    createProperty: publicProcedure.mutation(async () => {
-        const property = await db
-            .insert(properties)
-            .values({
-                type: '',
-                area: 99,
-                bath: 3,
-                bed: 9,
-                description: 'how nice',
-                location: 'India',
-                name: 'New',
-                ownerName: 'Tusher',
-                rating: 4,
-                ownerPhone: '33332323',
-                region: 'europe',
-                price: 323,
-                placeType: 'all',
-                types: 'apartment',
-                images: [],
-            })
-            .returning();
-
+    createProperty: publicProcedure.input(propertyCreateSchema).mutation(async ({ input }) => {
+        const property = await db.insert(properties).values(input).returning();
         return property;
+    }),
+
+    getTags: publicProcedure.query(async () => {
+        const tags = await db.query.propertyTags.findMany();
+        return {
+            tags: tags,
+        };
+    }),
+
+    createTag: publicProcedure.input(propertyTagCreateSchema).mutation(async ({ input }) => {
+        const tag = await db.insert(propertyTags).values(input).returning();
+
+        return tag;
+    }),
+    deleteTag: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+        const tag = await db.delete(propertyTags).where(eq(propertyTags.id, input.id)).returning();
+        return tag;
     }),
 });
 
