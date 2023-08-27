@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import User from './User';
+import User from './Propeties';
 
 export default async function Page() {
     return (

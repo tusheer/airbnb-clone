@@ -1,5 +1,16 @@
 import { relations } from 'drizzle-orm';
-import { boolean, integer, json, pgTable, primaryKey, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import {
+    boolean,
+    integer,
+    json,
+    pgTable,
+    primaryKey,
+    real,
+    serial,
+    text,
+    timestamp,
+    varchar,
+} from 'drizzle-orm/pg-core';
 
 export const propertyTags = pgTable('property_tags', {
     id: serial('id').primaryKey(),
@@ -26,19 +37,23 @@ export const properties = pgTable('properties', {
     area: integer('area').notNull(),
     created_at: timestamp('created_at').defaultNow(),
     updated_at: timestamp('updated_at'),
-    rating: integer('rating'),
+    rating: real('rating'),
     region: text('region', {
-        enum: ['all', 'europe', 'canada', 'asia', 'united_kingdom', 'united_states'],
-    }).default('all'),
+        enum: ['europe', 'canada', 'asia', 'united_kingdom', 'united_states'],
+    }).default('united_states'),
     types: text('types', {
         enum: ['house', 'apartment', 'guesthouse', 'hotel'],
     }).default('house'),
     images: json('images').$type<{ url: string }[]>().default([]),
     placeType: text('placeType', {
-        enum: ['all', 'room', 'entire_home'],
-    }).default('all'),
+        enum: ['room', 'entire_home'],
+    }).default('room'),
     vat: boolean('vat').default(false),
 });
+
+export const propertiesRelations = relations(properties, ({ many }) => ({
+    tagsToProperties: many(tagsToProperties),
+}));
 
 export const tagsToProperties = pgTable(
     'tags_to_properties',

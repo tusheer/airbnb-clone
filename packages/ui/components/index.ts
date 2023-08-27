@@ -8,6 +8,7 @@ export * from './Iframe';
 export * from './InfinityScroll';
 export * from './Modal';
 export * from './OverflowSlider';
+export * from './SelectInput';
 export * from './Skeleton';
 export * from './Switch';
 export * from './TextInput';

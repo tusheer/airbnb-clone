@@ -5,7 +5,7 @@
     "types": "./index.ts",
     "scripts": {
         "db:push": "drizzle-kit push:pg",
-        "db:studio": "drizzle-kit studio --port 3000",
+        "db:studio": "drizzle-kit studio --port 9000",
         "db:generate": "drizzle-kit generate:pg"
     },
     "prisma": {

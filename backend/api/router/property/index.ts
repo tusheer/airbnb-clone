@@ -1,18 +1,85 @@
-import db, { properties, propertyTags } from '@airbnb/database';
+import db, { properties, propertyTags, tagsToProperties } from '@airbnb/database';
 import { propertyCreateSchema, propertyTagCreateSchema, z } from '@airbnb/schema';
-import { eq } from 'drizzle-orm';
+import { SQL, between, eq, or } from 'drizzle-orm';
 import { publicProcedure, router } from '../../utils/trpc';
 
 const propertyRoute = router({
-    getProperties: publicProcedure.query(async () => {
-        const property = await db.query.properties.findMany();
-        return {
-            property: property,
-        };
-    }),
+    getProperties: publicProcedure
+        .input(
+            z
+                .object({
+                    price: z
+                        .object({
+                            min: z.number(),
+                            max: z.number(),
+                        })
+                        .optional(),
+                    bed: z.number().optional(),
+                    bath: z.number().optional(),
+                    region: propertyCreateSchema.shape.region.optional(),
+                    types: propertyCreateSchema.shape.types.optional(),
+                    placeType: propertyCreateSchema.shape.placeType.optional(),
+                    tags: z.number().optional(),
+                    vat: z.boolean().optional(),
+                })
+                .optional()
+        )
+        .query(async ({ input }) => {
+            // This code is used to get all the properties that match the filters that are passed as an argument
 
-    createProperty: publicProcedure.input(propertyCreateSchema).mutation(async ({ input }) => {
-        const property = await db.insert(properties).values(input).returning();
+            const sqlPattern = {
+                price: input?.price ? between(properties.price, input.price.min, input.price.max) : null,
+                bed: input?.bed ? eq(properties.bed, input.bed) : null,
+                bath: input?.bath ? eq(properties.bath, input.bath) : null,
+                region: input?.region ? eq(properties.region, input.region) : null,
+                types: input?.types ? eq(properties.types, input.types) : null,
+                placeType: input?.placeType ? eq(properties.placeType, input.placeType) : null,
+                vat: input?.vat ? eq(properties.vat, input.vat) : null,
+                tags: input?.tags ? eq(tagsToProperties.tagId, input.tags) : null,
+            } as { [key: string]: SQL<unknown> };
+
+            const sqlPatternKeys = Object.entries(sqlPattern)
+                .map(([, d]) => d)
+                .filter((d) => d !== null);
+
+            const property = await db
+                .select()
+                .from(properties)
+                .fullJoin(tagsToProperties, eq(properties.id, tagsToProperties.propertyId))
+                .where(or(...sqlPatternKeys));
+
+            return {
+                property: property.map((property) => property.properties),
+            };
+        }),
+
+    createProperty: publicProcedure
+        .input(
+            propertyCreateSchema.extend({
+                tags: z.array(
+                    z.object({
+                        id: z.number(),
+                    })
+                ),
+            })
+        )
+        .mutation(async ({ input }) => {
+            const property = await db.insert(properties).values(input).returning();
+
+            const tagsInProperty = input.tags.map((tag) => {
+                return {
+                    propertyId: property[0].id,
+                    tagId: tag.id,
+                };
+            });
+
+            await db.insert(tagsToProperties).values(tagsInProperty).returning();
+
+            return property;
+        }),
+
+    deleteProperty: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+        const property = await db.delete(properties).where(eq(properties.id, input.id)).returning();
         return property;
     }),
 
