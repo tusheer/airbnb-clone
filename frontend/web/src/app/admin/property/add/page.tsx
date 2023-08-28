@@ -1,9 +1,15 @@
+import { revalidatePath } from 'next/cache';
 import PropertyAddForm from '../PropertyAddForm';
+
+const serverAction = async () => {
+    'use server';
+    revalidatePath('/admin/property');
+};
 
 const PropertyAdd = () => {
     return (
         <div>
-            <PropertyAddForm />
+            <PropertyAddForm serverAction={serverAction} />
         </div>
     );
 };

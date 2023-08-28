@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@airbnb/ui/components';
-import { revalidatePath } from 'next/cache';
 import Link from 'next/link';
 import { trpc } from '../../../config/trpc';
 
@@ -36,7 +35,7 @@ const PropertyTable = () => {
                 </thead>
                 <tbody>
                     {data.property.map((property) => (
-                        <tr key={property.id}>
+                        <tr key={property?.id}>
                             <td>
                                 <div className="flex max-w-xs flex-wrap gap-2">
                                     {property.images?.length
@@ -64,7 +63,6 @@ const PropertyTable = () => {
                                     onClick={async () => {
                                         await mutateAsync({ id: property.id });
                                         refetch();
-                                        revalidatePath('/admin/property');
                                     }}
                                     className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                                 >

@@ -3,9 +3,7 @@
 import { trpc } from '../config/trpc';
 
 const User = () => {
-    const [data] = trpc.property.getProperties.useSuspenseQuery({
-        tags: 3,
-    });
+    const [data] = trpc.property.getProperties.useSuspenseQuery();
 
     console.log({ data });
 

@@ -43,9 +43,9 @@ const propertyRoute = router({
                 .filter((d) => d !== null);
 
             const property = await db
-                .select()
+                .selectDistinctOn([properties.id])
                 .from(properties)
-                .fullJoin(tagsToProperties, eq(properties.id, tagsToProperties.propertyId))
+                .innerJoin(tagsToProperties, eq(properties.id, tagsToProperties.propertyId))
                 .where(or(...sqlPatternKeys));
 
             return {
@@ -79,6 +79,7 @@ const propertyRoute = router({
         }),
 
     deleteProperty: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
+        await db.delete(tagsToProperties).where(eq(tagsToProperties.propertyId, input.id));
         const property = await db.delete(properties).where(eq(properties.id, input.id)).returning();
         return property;
     }),

@@ -3,12 +3,12 @@
 import { propertyCreateSchema, PropertyCreateType } from '@airbnb/schema';
 import { Button, SelectInput, TextInput } from '@airbnb/ui/components';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { trpc } from '../../../config/trpc';
 
-const PropertyAddForm = () => {
+const PropertyAddForm = ({ serverAction }: any) => {
     const { data } = trpc.property.getTags.useQuery();
 
     const {
@@ -26,6 +26,8 @@ const PropertyAddForm = () => {
             vat: false,
         },
     });
+
+    const router = useRouter();
 
     const trpcUtils = trpc.useContext();
 
@@ -52,8 +54,11 @@ const PropertyAddForm = () => {
                         });
 
                         await trpcUtils.property.getProperties.invalidate();
+
                         reset();
-                        Router.push('/admin/property');
+
+                        router.push('/admin/property');
+                        serverAction();
                     })}
                     className="grid grid-cols-3 gap-3"
                 >
