@@ -1,4 +1,5 @@
 import { revalidatePath } from 'next/cache';
+import { Suspense } from 'react';
 import PropertyAddForm from '../PropertyAddForm';
 
 const serverAction = async () => {
@@ -9,7 +10,9 @@ const serverAction = async () => {
 const PropertyAdd = () => {
     return (
         <div>
-            <PropertyAddForm serverAction={serverAction} />
+            <Suspense fallback={'...loading'}>
+                <PropertyAddForm serverAction={serverAction} />
+            </Suspense>
         </div>
     );
 };

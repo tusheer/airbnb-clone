@@ -4,7 +4,7 @@ import { SQL, between, eq, or } from 'drizzle-orm';
 import { publicProcedure, router } from '../../utils/trpc';
 
 const propertyRoute = router({
-    getProperties: publicProcedure.input(propertyFilterQuerySchema).query(async ({ input }) => {
+    getProperties: publicProcedure.input(propertyFilterQuerySchema.optional()).query(async ({ input }) => {
         // This code is used to get all the properties that match the filters that are passed as an argument
 
         const sqlPattern = {

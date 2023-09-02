@@ -48,7 +48,7 @@ const PropertyAddForm = ({ serverAction }: any) => {
                 <h1 className="mb-6 pt-7 text-xl font-semibold">Add Property</h1>
                 <form
                     onSubmit={handleSubmit(async (data) => {
-                        const response = await mutateAsync({
+                        await mutateAsync({
                             ...data,
                             tags: selectedTag.map((id) => ({ id })),
                         });
@@ -57,8 +57,8 @@ const PropertyAddForm = ({ serverAction }: any) => {
 
                         reset();
 
-                        router.push('/admin/property');
-                        serverAction();
+                        window.location.href = '/admin/property';
+                        await serverAction();
                     })}
                     className="grid grid-cols-3 gap-3"
                 >
