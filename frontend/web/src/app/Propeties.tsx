@@ -7,7 +7,7 @@ const User = () => {
 
     console.log({ data });
 
-    return <div>User</div>;
+    return <div></div>;
 };
 
 export default User;

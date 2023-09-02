@@ -1,4 +1,3 @@
-'use client';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import useEventListener from '../../hooks/use-event-listener';

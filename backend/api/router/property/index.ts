@@ -1,57 +1,37 @@
 import db, { properties, propertyTags, tagsToProperties } from '@airbnb/database';
-import { propertyCreateSchema, propertyTagCreateSchema, z } from '@airbnb/schema';
+import { propertyCreateSchema, propertyFilterQuerySchema, propertyTagCreateSchema, z } from '@airbnb/schema';
 import { SQL, between, eq, or } from 'drizzle-orm';
 import { publicProcedure, router } from '../../utils/trpc';
 
 const propertyRoute = router({
-    getProperties: publicProcedure
-        .input(
-            z
-                .object({
-                    price: z
-                        .object({
-                            min: z.number(),
-                            max: z.number(),
-                        })
-                        .optional(),
-                    bed: z.number().optional(),
-                    bath: z.number().optional(),
-                    region: propertyCreateSchema.shape.region.optional(),
-                    types: propertyCreateSchema.shape.types.optional(),
-                    placeType: propertyCreateSchema.shape.placeType.optional(),
-                    tags: z.number().optional(),
-                    vat: z.boolean().optional(),
-                })
-                .optional()
-        )
-        .query(async ({ input }) => {
-            // This code is used to get all the properties that match the filters that are passed as an argument
+    getProperties: publicProcedure.input(propertyFilterQuerySchema).query(async ({ input }) => {
+        // This code is used to get all the properties that match the filters that are passed as an argument
 
-            const sqlPattern = {
-                price: input?.price ? between(properties.price, input.price.min, input.price.max) : null,
-                bed: input?.bed ? eq(properties.bed, input.bed) : null,
-                bath: input?.bath ? eq(properties.bath, input.bath) : null,
-                region: input?.region ? eq(properties.region, input.region) : null,
-                types: input?.types ? eq(properties.types, input.types) : null,
-                placeType: input?.placeType ? eq(properties.placeType, input.placeType) : null,
-                vat: input?.vat ? eq(properties.vat, input.vat) : null,
-                tags: input?.tags ? eq(tagsToProperties.tagId, input.tags) : null,
-            } as { [key: string]: SQL<unknown> };
+        const sqlPattern = {
+            price: input?.price ? between(properties.price, input.price.min, input.price.max) : null,
+            bed: input?.bed ? eq(properties.bed, input.bed) : null,
+            bath: input?.bath ? eq(properties.bath, input.bath) : null,
+            region: input?.region ? eq(properties.region, input.region) : null,
+            types: input?.types ? eq(properties.types, input.types) : null,
+            placeType: input?.placeType ? eq(properties.placeType, input.placeType) : null,
+            vat: input?.vat ? eq(properties.vat, input.vat) : null,
+            tags: input?.tags ? eq(tagsToProperties.tagId, input.tags) : null,
+        } as { [key: string]: SQL<unknown> };
 
-            const sqlPatternKeys = Object.entries(sqlPattern)
-                .map(([, d]) => d)
-                .filter((d) => d !== null);
+        const sqlPatternKeys = Object.entries(sqlPattern)
+            .map(([, d]) => d)
+            .filter((d) => d !== null);
 
-            const property = await db
-                .selectDistinctOn([properties.id])
-                .from(properties)
-                .innerJoin(tagsToProperties, eq(properties.id, tagsToProperties.propertyId))
-                .where(or(...sqlPatternKeys));
+        const property = await db
+            .selectDistinctOn([properties.id])
+            .from(properties)
+            .innerJoin(tagsToProperties, eq(properties.id, tagsToProperties.propertyId))
+            .where(or(...sqlPatternKeys));
 
-            return {
-                property: property.map((property) => property.properties),
-            };
-        }),
+        return {
+            property: property.map((property) => property.properties),
+        };
+    }),
 
     createProperty: publicProcedure
         .input(

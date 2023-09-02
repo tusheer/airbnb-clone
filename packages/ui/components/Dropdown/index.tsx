@@ -1,4 +1,3 @@
-'use client';
 import { createContext, useContext, useRef, useState } from 'react';
 import useOnClickOutside from '../../hooks/use-onclick-outside';
 import Button from './Dropdown.Button';

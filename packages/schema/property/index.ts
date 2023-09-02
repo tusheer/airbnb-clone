@@ -20,5 +20,23 @@ export const propertyTagCreateSchema = createSelectSchema(propertyTags).omit({
     id: true,
 });
 
+export const propertyFilterQuerySchema = z
+    .object({
+        price: z
+            .object({
+                min: z.number(),
+                max: z.number(),
+            })
+            .optional(),
+        bed: z.number().optional(),
+        bath: z.number().optional(),
+        region: propertyCreateSchema.shape.region.optional(),
+        types: propertyCreateSchema.shape.types.optional(),
+        placeType: propertyCreateSchema.shape.placeType.optional(),
+        tags: z.number().optional(),
+        vat: z.boolean().optional(),
+    })
+    .optional();
+
 export type PropertyCreateType = z.infer<typeof propertyCreateSchema>;
 export type PropertyTagsCrateType = z.infer<typeof propertyTagCreateSchema>;

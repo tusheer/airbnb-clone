@@ -7,7 +7,7 @@ export const CheckIcon: React.FC<Icon> = ({ width, height, stroke, strokeWidth =
                 d="M13.3332 4L5.99984 11.3333L2.6665 8"
                 stroke={stroke}
                 stroke-width={strokeWidth}
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
             />
         </svg>

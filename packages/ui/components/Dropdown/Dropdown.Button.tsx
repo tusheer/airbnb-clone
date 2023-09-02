@@ -1,5 +1,3 @@
-'use client';
-
 import { IDropdownContext, useDropdownContext } from './index';
 
 export type ButtonType = React.ElementType;

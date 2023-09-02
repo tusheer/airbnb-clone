@@ -1,3 +1,4 @@
+export * from 'framer-motion';
 export * from './Button';
 export * from './Checkbox';
 export * from './Container';
