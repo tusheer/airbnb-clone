@@ -17,12 +17,7 @@ const app = express();
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 
 app.use(cookieParser());
-app.use(
-    cors({
-        origin: [customConfig.origin, 'http://localhost:3000'],
-        credentials: true,
-    })
-);
+app.use(cors());
 app.use(
     '/api/trpc',
     trpcExpress.createExpressMiddleware({
