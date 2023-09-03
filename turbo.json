@@ -23,5 +23,5 @@
         }
     },
     "globalDependencies": [".env"],
-    "globalEnv": ["DATABASE_URL"]
+    "globalEnv": ["DATABASE_URL", "PORT"]
 }

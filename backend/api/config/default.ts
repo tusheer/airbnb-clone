@@ -10,7 +10,7 @@ const customConfig: {
     refreshTokenPublicKey: string;
     redisCacheExpiresIn: number;
 } = {
-    port: 8080,
+    port: Number(process.env.PORT) || 8080,
     accessTokenExpiresIn: 1,
     refreshTokenExpiresIn: 60,
     origin: 'http://localhost:3000',

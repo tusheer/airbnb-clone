@@ -31,6 +31,10 @@ app.use(
     })
 );
 
+app.use('/test', (req, res) => {
+    res.send('Hello World');
+});
+
 const port = customConfig.port;
 app.listen(port, () => {
     // connectRedis();
