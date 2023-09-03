@@ -11,6 +11,14 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={inter.className}>
+            <head>
+                <title>Vacation Homes &amp; Condo Rentals - Airbnb</title>
+                <link
+                    rel="icon"
+                    type="image/x-icon"
+                    href="https://a0.muscache.com/airbnb/static/logotype_favicon-21cc8e6c6a2cca43f061d2dcabdf6e58.ico"
+                />
+            </head>
             <body>
                 <TRPCReactProvider>{children}</TRPCReactProvider>
             </body>
