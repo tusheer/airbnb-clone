@@ -9,14 +9,14 @@ export default async function Page() {
     return (
         <div>
             <Navbar />
-            <Suspense fallback={'....'}>
+            <Suspense fallback={<div></div>}>
                 <TagsBar />
             </Suspense>
 
             <Suspense>
                 <VatFilter />
             </Suspense>
-            <Suspense fallback={'...loading'}>
+            <Suspense fallback={<div></div>}>
                 <Properties />
             </Suspense>
             <Footer />
