@@ -5,7 +5,6 @@ import express from 'express';
 import morgan from 'morgan';
 import customConfig from './config/default';
 import propertyRouter from './router/property';
-import uploadRouter from './router/upload';
 import { createContext, router, type Context } from './utils/trpc';
 // import redisClient, { connectRedis } from './utils/connectRedis';
 
@@ -31,8 +30,6 @@ app.use(
         createContext,
     })
 );
-
-app.use('/api/upload', uploadRouter);
 
 const port = customConfig.port;
 app.listen(port, () => {
