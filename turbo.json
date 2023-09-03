@@ -23,5 +23,5 @@
         }
     },
     "globalDependencies": [".env"],
-    "globalEnv": ["DATABASE_URL", "PORT"]
+    "globalEnv": ["DATABASE_URL", "PORT", "NEXT_PUBLIC_API_URL"]
 }
