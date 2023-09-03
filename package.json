@@ -10,6 +10,7 @@
         "build": "dotenv -- turbo run build",
         "build:api": "dotenv -- turbo run build --filter=api",
         "build:web": "dotenv -- turbo run build --filter=web",
+        "start:prod": "dotenv -- turbo run build --filter=api",
         "dev": "dotenv -- turbo run dev",
         "db:push": "dotenv -- turbo run db:push",
         "db:studio": "dotenv -- turbo run db:studio",

@@ -17,6 +17,9 @@
         },
         "db:generate": {
             "cache": false
+        },
+        "start:prod:": {
+            "cache": false
         }
     },
     "globalDependencies": [".env"],
