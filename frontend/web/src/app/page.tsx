@@ -6,18 +6,17 @@ import TagsBar from '../components/TagsBar';
 import VatFilter from '../components/VatFilter';
 
 export const runtime = 'edge';
-
-const Page = async () => {
+export const Page = async () => {
     return (
         <div>
             <Navbar />
-            <Suspense fallback={<div>Loading</div>}>
+            <Suspense fallback={<div></div>}>
                 <TagsBar />
             </Suspense>
             <Suspense>
                 <VatFilter />
             </Suspense>
-            <Suspense fallback={<div>Loading</div>}>
+            <Suspense fallback={<div></div>}>
                 <Properties />
             </Suspense>
             <Footer />
