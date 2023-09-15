@@ -24,12 +24,12 @@
     "devDependencies": {
         "@turbo/gen": "^1.10.13",
         "cz-conventional-changelog": "^3.3.0",
-        "eslint": "^8.47.0",
+        "eslint": "^8.49.0",
         "husky": "^8.0.3",
         "lint-staged": "^14.0.1",
-        "prettier": "^3.0.2",
+        "prettier": "^3.0.3",
         "prettier-plugin-organize-imports": "^3.2.3",
-        "prettier-plugin-tailwindcss": "^0.5.3",
+        "prettier-plugin-tailwindcss": "^0.5.4",
         "rimraf": "^5.0.1",
         "turbo": "^1.10.13",
         "typescript": "^5.2.2"

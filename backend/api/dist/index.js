@@ -11438,7 +11438,7 @@ var getJsonContentTypeInputs = /* @__PURE__ */ __name(function (opts) {
     }
     return input;
 }, 'getJsonContentTypeInputs');
-// ../../node_modules/@trpc/server/dist/resolveHTTPResponse-3aef2178.mjs
+// ../../node_modules/@trpc/server/dist/resolveHTTPResponse-67085326.mjs
 var HTTP_METHOD_PROCEDURE_TYPE_MAP = {
     GET: 'query',
     POST: 'mutation',
@@ -11730,6 +11730,9 @@ function _resolveHTTPResponse() {
                     _state.label = 1;
                 case 1:
                     _state.trys.push([1, 14, , 15]);
+                    return [4, opts.createContext()];
+                case 2:
+                    ctx = _state.sent();
                     if (opts.error) {
                         throw opts.error;
                     }
@@ -11761,12 +11764,9 @@ function _resolveHTTPResponse() {
                                     : false,
                         }),
                     ];
-                case 2:
+                case 3:
                     inputs = _state.sent();
                     paths = isBatchCall ? decodeURIComponent(opts.path).split(',') : [opts.path];
-                    return [4, opts.createContext()];
-                case 3:
-                    ctx = _state.sent();
                     promises = paths.map(function (path, index) {
                         return inputToProcedureCall({
                             opts: opts,
@@ -11959,11 +11959,15 @@ function _getPostBody() {
                     2,
                     new Promise(function (resolve) {
                         if ('body' in req) {
+                            var _req_headers_contenttype;
                             resolve({
                                 ok: true,
                                 data: req.body,
                                 // If the request headers specifies a content-type, we assume that the body has been preprocessed
-                                preprocessed: req.headers['content-type'] === 'application/json',
+                                preprocessed: !!((_req_headers_contenttype = req.headers['content-type']) === null ||
+                                _req_headers_contenttype === void 0
+                                    ? void 0
+                                    : _req_headers_contenttype.startsWith('application/json')),
                             });
                             return;
                         }
@@ -11998,12 +12002,16 @@ function _getPostBody() {
 __name(getPostBody, 'getPostBody');
 var nodeHTTPJSONContentTypeHandler = createNodeHTTPContentTypeHandler({
     isMatch: function isMatch(opts) {
-        return opts.req.headers['content-type'] === 'application/json';
+        var _opts_req_headers_contenttype;
+        return !!((_opts_req_headers_contenttype = opts.req.headers['content-type']) === null ||
+        _opts_req_headers_contenttype === void 0
+            ? void 0
+            : _opts_req_headers_contenttype.startsWith('application/json'));
     },
     getBody: getPostBody,
     getInputs: getJsonContentTypeInputs,
 });
-// ../../node_modules/@trpc/server/dist/nodeHTTPRequestHandler-842a1461.mjs
+// ../../node_modules/@trpc/server/dist/nodeHTTPRequestHandler-a3cc8c22.mjs
 var defaultJSONContentTypeHandler = nodeHTTPJSONContentTypeHandler();
 function nodeHTTPRequestHandler(opts) {
     return _nodeHTTPRequestHandler.apply(this, arguments);
@@ -12260,7 +12268,7 @@ var import_express = __toESM(require('express'));
 var import_morgan = __toESM(require_morgan());
 // config/default.ts
 var customConfig = {
-    port: 8080,
+    port: Number(process.env.PORT) || 8080,
     accessTokenExpiresIn: 1,
     refreshTokenExpiresIn: 60,
     origin: 'http://localhost:3000',
@@ -21290,12 +21298,7 @@ var appRouter = router({
 var app = (0, import_express.default)();
 if (false) app.use((0, import_morgan.default)('dev'));
 app.use((0, import_cookie_parser.default)());
-app.use(
-    (0, import_cors.default)({
-        origin: [default_default.origin, 'http://localhost:3000'],
-        credentials: true,
-    })
-);
+app.use((0, import_cors.default)());
 app.use(
     '/api/trpc',
     createExpressMiddleware({
@@ -21303,6 +21306,9 @@ app.use(
         createContext: createContext,
     })
 );
+app.use('/test', function (req, res) {
+    res.send('Hello World');
+});
 var port = default_default.port;
 app.listen(port, function () {
     console.log('\uD83D\uDE80 Server listening on port '.concat(port));
@@ -21376,9 +21382,9 @@ morgan/index.js:
      *)
   *)
 
-@trpc/server/dist/resolveHTTPResponse-3aef2178.mjs:
+@trpc/server/dist/resolveHTTPResponse-67085326.mjs:
   (* istanbul ignore if -- @preserve *)
 
-@trpc/server/dist/nodeHTTPRequestHandler-842a1461.mjs:
+@trpc/server/dist/nodeHTTPRequestHandler-a3cc8c22.mjs:
   (* istanbul ignore if -- @preserve *)
 */

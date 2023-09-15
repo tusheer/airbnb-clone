@@ -5,21 +5,24 @@ import { default as Properties } from '../components/Propeties';
 import TagsBar from '../components/TagsBar';
 import VatFilter from '../components/VatFilter';
 
-export default async function Page() {
+export const runtime = 'edge';
+
+const Page = async () => {
     return (
         <div>
             <Navbar />
-            <Suspense fallback={<div></div>}>
+            <Suspense fallback={<div>Loading</div>}>
                 <TagsBar />
             </Suspense>
-
             <Suspense>
                 <VatFilter />
             </Suspense>
-            <Suspense fallback={<div></div>}>
+            <Suspense fallback={<div>Loading</div>}>
                 <Properties />
             </Suspense>
             <Footer />
         </div>
     );
-}
+};
+
+export default Page;

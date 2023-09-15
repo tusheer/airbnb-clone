@@ -6,15 +6,17 @@ import useQueryParams from '../hooks/usePropertyQuery';
 
 const Properties = () => {
     const { queryParams } = useQueryParams();
-    const [data] = trpc.property.getProperties.useSuspenseQuery(queryParams);
+    const { data } = trpc.property.getProperties.useQuery(queryParams, {
+        cacheTime: 300000000,
+        suspense: true,
+        staleTime: 300000000,
+    });
 
     return (
         <section className="mb-20">
             <div className="container mx-auto ">
                 <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-6">
-                    {data.property.map((property) => (
-                        <PropertyCard {...property} key={property.id} />
-                    ))}
+                    {data?.property.map((property) => <PropertyCard {...property} key={property.id} />)}
                 </div>
             </div>
         </section>
