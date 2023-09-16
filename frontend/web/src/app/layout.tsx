@@ -10,7 +10,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className={inter.className}>
+        <html lang="en" suppressHydrationWarning className={inter.className}>
             <head>
                 <title>Vacation Homes &amp; Condo Rentals - Airbnb</title>
                 <link
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     href="https://a0.muscache.com/airbnb/static/logotype_favicon-21cc8e6c6a2cca43f061d2dcabdf6e58.ico"
                 />
             </head>
-            <body>
+            <body suppressHydrationWarning>
                 <TRPCReactProvider>{children}</TRPCReactProvider>
             </body>
         </html>

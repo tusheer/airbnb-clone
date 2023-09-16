@@ -285,9 +285,4 @@ export const OverflowSlider: React.FC<IOverflowSlider> & {
     );
 };
 
-OverflowSlider.defaultProps = {
-    slidesToShow: 1,
-    autoPlay: false,
-};
-
 OverflowSlider.Slider = Slider;
