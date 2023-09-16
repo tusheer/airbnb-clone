@@ -1,6 +1,7 @@
 'use client';
 
 import { PropertyType } from '@airbnb/schema';
+import Image from 'next/image';
 import { trpc } from '../config/trpc';
 import useQueryParams from '../hooks/usePropertyQuery';
 
@@ -27,13 +28,17 @@ const PropertyCard = ({ location, name, images, rating, price, vat, description 
     return (
         <div className="">
             <figure className="h-ful relative aspect-[20/19] w-full rounded-xl ">
-                <img
+                <Image
+                    height={100}
+                    width={100}
+                    objectFit="cover"
+                    loading="lazy"
                     src={(images as { url: string; name: string }[])[0].url}
-                    alt=""
+                    alt={(images as { url: string; name: string }[])[0].name}
                     className="h-full w-full rounded-xl object-cover"
                 />
                 <button className="host absolute bottom-3 left-2 rounded-lg bg-white px-3  py-3">
-                    <img
+                    <Image
                         src="https://a0.muscache.com/im/pictures/user/3816a6ef-5cc9-40ed-ae47-406646daa103.jpg?im_w=720"
                         alt=""
                         className="h-10 w-10 rounded-full object-cover"
